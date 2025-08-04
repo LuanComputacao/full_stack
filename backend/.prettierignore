@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+coverage/
+.docker/
+logs/
+*.min.js
+*.min.css
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+.env
+.env.local
+.env.production
+.env.test

@@ -1,0 +1,16 @@
+FROM node:20-alpine
+
+WORKDIR /app
+RUN npm install -g pnpm && \
+    addgroup -g 1001 -S nodejs && \
+    adduser -S app -u 1001 -G nodejs
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install
+RUN mkdir -p /app/data && \
+    chown -R app:nodejs /app
+USER app
+EXPOSE 3001
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+  CMD node -e "require('http').request('http://localhost:3001/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1) }).end()"
+
+CMD ["pnpm", "run", "dev"]

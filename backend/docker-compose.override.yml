@@ -1,0 +1,16 @@
+# Development environment overrides (used by default)
+services:
+  backend:
+    build:
+      dockerfile: .docker/Dockerfile.dev
+    environment:
+      - NODE_ENV=development
+    volumes:
+      # Mount source code for hot reload
+      - ./src:/app/src:ro
+      - ./package.json:/app/package.json:ro
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      - ./data_dev:/app/data
+      - node_modules_cache:/app/node_modules
+    healthcheck:
+      start_period: 20s

@@ -1,0 +1,12 @@
+# Production environment configuration
+services:
+  backend:
+    build:
+      dockerfile: .docker/Dockerfile
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # Mount a volume to persist favorites data
+      - ./data:/app/data
+    healthcheck:
+      start_period: 40s
